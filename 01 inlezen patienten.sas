@@ -17,7 +17,7 @@ data PATIENTEN                                ;
 /*	   informat patientStatus $8.;*/
 	   length patientStatus $ 20;
 	   informat receptVanaf &datumformat;
-       informat toedieningsadvies $32. ;
+       informat toedieningsadvies $50. ;
        informat geboortedatum &datumformat ;
        informat geslacht $10. ;
        informat postcodeKlant $8. ;
@@ -58,7 +58,11 @@ data PATIENTEN                                ;
 				specialisme $
                 postcodeZiekenhuis $
     ;
+
+toedieningsadvies = '1.00 keer per 7.00 dagen';
+
 	if toedieningsadvies = '0.00 keer per 7.00 dagen' then call missing(toedieningsadvies);
+
 	if missing(receptVanaf) then do;
 		*receptVanaf = datumAanmelding;
 		receptVanafAltered = 1;
@@ -172,6 +176,14 @@ data PATIENTEN                                ;
 		if ecpid in ( 224274 225510 225814  225842 226703 230578 231769 234953 237281 237282 237283 241652 243268 244084) then delete;
 	end;
 
+	if &rapportdatum = '30jun2018'd then do;
+		/* Fout in data */
+		if ecpid in (	52028	54722	54784	55239	69981	151131	155571	167557	176583	183335
+						188868	202996	203737	216423	224274
+						228947	231769) then delete;
+		/* Nog geen pompdata voor ontvangen */
+		if ecpid in ( 224274 225510 225814  225842 226703 230578 231769 ) then delete;
+	end;
 
 	/* Niet Belgische postcodes omzetten naar Belgische  */
 	select (ecpid);	
@@ -266,7 +278,7 @@ data recept_dosis / view=recept_dosis;
 		call missing(hizentra_ml);
 	end;
 	select (product);
-		when('NULL', '') do;
+		when('NULL', '', '\N') do;
 			/* niets */
 		end;
 		when ('Hizentra 1g (5ml) sc immunoglobulines') do;
