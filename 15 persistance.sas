@@ -1,12 +1,14 @@
 proc sql;
 	create table work.rapport_persistance_period as 
 	select 
-		put(datumAanmelding, yyq.) as periode,
+		put(datumAanmelding, yyq.) as periode,		
+	case when stopreden = '83' then 1 else 0 end as overleden,
 		count(*) as aantal,
 		sum( case when missing(hci_stopdatum) then 1 else 0 end) as nog_op_therapie
 	from hiz.stopdatums
 	where datumAanmelding ge '01jan2012'd
-	group by 1;
+	/* and stopreden ne '83' */
+	group by 1,2;
 quit;
 
 
@@ -27,6 +29,7 @@ proc sql;
 		hiz.stopdatums
 	where
 		'01jan2012'd le datumAanmelding le intnx('year', &rapportdatum, -1, 's')
+		and stopreden ne '83'
 	;
 quit;
 
