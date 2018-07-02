@@ -103,7 +103,7 @@ proc datasets lib = work nolist; delete rapport_a_: ; quit;
 %runit('31dec2017'd);
 
 %runit('31mar2018'd);
-* %runit('30jun2018'd);
+%runit('30jun2018'd);
 * %runit('30sep2018'd);
 * %runit('31dec2018'd);
 

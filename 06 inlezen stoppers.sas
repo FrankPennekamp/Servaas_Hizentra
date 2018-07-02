@@ -85,4 +85,8 @@ cards;
 228947	18-12-2017	61
 ;;;
 run;
+
+proc freq data=hiz.stoppers noprint;
+	tables stopreden / out=freq_stopreden;
+quit;
 */
