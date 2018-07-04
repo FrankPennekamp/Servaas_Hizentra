@@ -292,13 +292,13 @@ quit;
 /*
 	Sommige voorschrijvers verwijderen. 
 */
-data hiz.stopdatums_rapporta;
+data hiz.stopdatums_min_2;
 	set hiz.stopdatums;
 run;
 
 
 proc sql noprint;
-	delete from hiz.stopdatums_rapporta
+	delete from hiz.stopdatums_min_2
 	where ecpid in ( 
 		select distinct 
 			pat.ecpid 
@@ -309,6 +309,11 @@ proc sql noprint;
 		) 
 	;
 quit;
-
-
+/*
+proc compare 
+		base=hiz.stopdatums_rapporta 
+		comp=hiz.stopdatums outbase outcomp outdiff outnoequal out=papa;
+	id ecpid; 
+quit;
+*/
 

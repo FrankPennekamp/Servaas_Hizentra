@@ -29,6 +29,7 @@ run;
 	invoer=
 		work.stoppers_dit_kwartaal
 		work.Rapport_a 
+		work.Rapport_amin_2
 		work.Rapport_b 
 		work.Rapport_c
 		work.Rapport_d
@@ -40,7 +41,7 @@ run;
 		,
 	sep=#,
 	tabBladNamen=
-		Nabellen#a#b#c#d#d export#b deel 2#c deel 2#persistence tabel a#persistence tabel b,
+		Nabellen#a#a zonder GIJS COUCKE#b#c#d#d export#b deel 2#c deel 2#persistence tabel a#persistence tabel b,
 	autofilter=N, 
 	exceltemplate=&codeRoot\leeg.xls
 );
