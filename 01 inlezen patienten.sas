@@ -59,7 +59,10 @@ data PATIENTEN                                ;
                 postcodeZiekenhuis $
     ;
 
-toedieningsadvies = '1.00 keer per 7.00 dagen';
+	/* In verband met hexadecimale aanlevering, een harde hack voor de toedieningsadvies. */
+	if &rapportdatum = '30jun2018'd then do;
+		toedieningsadvies = '1.00 keer per 7.00 dagen';
+	end;
 
 	if toedieningsadvies = '0.00 keer per 7.00 dagen' then call missing(toedieningsadvies);
 
@@ -183,6 +186,7 @@ toedieningsadvies = '1.00 keer per 7.00 dagen';
 						228947	231769) then delete;
 		/* Nog geen pompdata voor ontvangen */
 		if ecpid in ( 224274 225510 225814  225842 226703 230578 231769
+					249776
 				/* Uitzoekers 20180703: */
 				247179 245040 252177 252178 254256 254536) then delete;
 	end;
@@ -194,6 +198,19 @@ toedieningsadvies = '1.00 keer per 7.00 dagen';
 		when (151967)postcodeKlant = '3000';
 		when (151971)postcodeKlant = '3000';
 		otherwise;
+	end;
+	
+	if missing(postcodeZiekenhuis) or strip(postcodeZiekenhuis) eq '\N' then do;		
+		if ECPID =49501	then postcodeZiekenhuis = '6060';
+		if ECPID =53917	then postcodeZiekenhuis = '8670';
+		if ECPID =54719	then postcodeZiekenhuis = '8760';
+		if ECPID =55081	then postcodeZiekenhuis = '9170';
+		if ECPID =75275	then postcodeZiekenhuis = '9080';
+		if ECPID =204596 then postcodeZiekenhuis = '8500';
+		if ECPID =212396 then postcodeZiekenhuis = '8800';
+		if ECPID =225189 then postcodeZiekenhuis = '9130';
+		if ECPID =253843 then postcodeZiekenhuis = '1320';
+		if ECPID =255262 then postcodeZiekenhuis = '9000';
 	end;
 run;
 
