@@ -182,7 +182,9 @@ toedieningsadvies = '1.00 keer per 7.00 dagen';
 						188868	202996	203737	216423	224274
 						228947	231769) then delete;
 		/* Nog geen pompdata voor ontvangen */
-		if ecpid in ( 224274 225510 225814  225842 226703 230578 231769 ) then delete;
+		if ecpid in ( 224274 225510 225814  225842 226703 230578 231769
+				/* Uitzoekers 20180703: */
+				247179 245040 252177 252178 254256 254536) then delete;
 	end;
 
 	/* Niet Belgische postcodes omzetten naar Belgische  */

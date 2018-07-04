@@ -65,6 +65,9 @@ data HIZ.Pompdata                                 ;
 		if klant in ('K75677') then delete;
 	end;
 
+	if &rapportdatum = '30jun2018'd then do;
+		if klant in ('K83919') then delete;
+	end;
 run;
 
 /* SB 2017/04/11 : klant koopt geen pomp, maar doet wel mee */
