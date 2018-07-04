@@ -292,9 +292,13 @@ quit;
 /*
 	Sommige voorschrijvers verwijderen. 
 */
+data hiz.stopdatums_rapporta;
+	set hiz.stopdatums;
+run;
+
 
 proc sql noprint;
-	delete from hiz.stopdatums 
+	delete from hiz.stopdatums_rapporta
 	where ecpid in ( 
 		select distinct 
 			pat.ecpid 
@@ -305,4 +309,6 @@ proc sql noprint;
 		) 
 	;
 quit;
+
+
 

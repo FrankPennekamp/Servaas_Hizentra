@@ -1,18 +1,20 @@
 /* Bereken populatie, leeftijd, korter dan 180 dagen per patient */
 /*%let rapportagedatum = '31mar2015'd;*/
 
+/* Let op: twee keer draaien.
+	1. hiz.stopdatums_rapporta (dat is zonder twee doctoren)
+	-> verander proc append	
+	2. hiz.stopdatums (dat is MET die twee)
+*/
+
+
 proc datasets lib = work nolist;
 	delete rapport_a;
 quit; 
 
 %macro runit(rapportagedatum);
 data in_scope;
-	set hiz.stopdatums;
-	
-/*t2 = toedieningsadvies;*/
-/*toedieningsadvies = prxchange("s/(.*) keer per (.*) dagen/$2 keer per $1 dagen/i", -1, t2);*/
-
-/*	if receptVanaf le &rapportagedatum le receptEind;*/
+	set hiz.stopdatums_rapporta;
 
 	if datumAanmelding le &rapportagedatum le stopdatum_final;
 
@@ -64,6 +66,7 @@ quit;
 %mend maak_rapport_block;
 
 proc datasets lib = work nolist; delete rapport_a_: ; quit;
+
 %maak_rapport_block(leeftijd_staffel);
 %maak_rapport_block(gesl);
 %maak_rapport_block(gewicht_staffel);
